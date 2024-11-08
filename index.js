@@ -4,21 +4,59 @@ let button = document.querySelector("#Restart");
 let anna = document.querySelector(".anna")
 playbox.forEach((e) => {
   e.addEventListener("click", function () {
-    if (count % 2 == 0) {
+    if (true) {
       if (this.innerHTML == "<h1></h1>"&&anna.innerText=="") {
         this.innerHTML = "<h1>X</h1>";
-        count++;
+        gamecondition();
+        setTimeout(computerturn,300)
+        
       }
-      gamecondition();
-    } else {
-      if (this.innerHTML == "<h1></h1>"&&anna.innerText=="") {
-        this.innerHTML = "<h1>O</h1>";
-        count++;
-      }
-      gamecondition();
-    }
+       } 
   });
 });
+
+let arr=[]
+function computerturn() {
+  let emptyCells = [];
+  playbox.forEach((e, index) => {
+    if (e.innerHTML === "<h1></h1>") {
+      emptyCells.push(index);
+    }
+  });
+
+  const winningPatterns = [
+    { check: [0, 2], place: 1 },
+    { check: [0, 1], place: 2 },
+    { check: [0, 3], place: 6 },
+    { check: [0, 6], place: 3 },
+    { check: [0, 8], place: 4 },
+    { check: [0, 4], place: 8 },
+    { check: [2, 4], place: 6 },
+    { check: [6, 8], place: 7 },
+    { check: [6, 7], place: 8 },
+    { check: [2, 5], place: 8 },
+    { check: [2, 6], place: 4 },
+    { check: [4, 5], place: 3 },
+  ];
+
+  const matchedPattern = winningPatterns.find(
+    ({ check, place }) =>
+      playbox[check[0]].innerHTML === "<h1>X</h1>" &&
+      playbox[check[1]].innerHTML === "<h1>X</h1>" &&
+      playbox[place].innerHTML === "<h1></h1>"
+  );
+
+  if (matchedPattern) {
+    playbox[matchedPattern.place].innerHTML = "<h1>O</h1>";
+  } else if (emptyCells.length > 0 && anna.innerText === "") {
+    const randomIndex = Math.floor(Math.random() * emptyCells.length);
+    playbox[emptyCells[randomIndex]].innerHTML = "<h1>O</h1>";
+  }
+
+  gamecondition();
+}
+
+
 
 function gamecondition() {
   let playbox = document.querySelectorAll(".playbox");
@@ -41,6 +79,7 @@ function gamecondition() {
       button.innerText="New game";
       button.style.backgroundColor="white"
       anna.innerText=`winner is ${playbox[0].innerText}`
+      count++;
       
     }
   }
@@ -54,6 +93,7 @@ function gamecondition() {
        button.innerText="New game";
        button.style.backgroundColor="white"
       anna.innerText=`winner is ${playbox[0].innerText}`
+      count++;
     }
   }
 
@@ -66,6 +106,7 @@ function gamecondition() {
        button.innerText="New game";
        button.style.backgroundColor="white"
       anna.innerText=`winner is ${playbox[0].innerText}`
+      count++;
     }
   }
 
@@ -78,6 +119,7 @@ function gamecondition() {
       button.innerText="New game";
       button.style.backgroundColor="white"
       anna.innerText=`winner is ${playbox[1].innerText}`
+      count++;
     }
   }
 
@@ -90,6 +132,7 @@ function gamecondition() {
       button.innerText="New game";
       button.style.backgroundColor="white"
       anna.innerText=`winner is ${playbox[2].innerText}`
+      count++
     }
   }
 
@@ -102,6 +145,7 @@ function gamecondition() {
       button.innerText="New game";
       button.style.backgroundColor="white"
       anna.innerText=`winner is ${playbox[2].innerText}`
+      count++
     }
   }
   if (D != "" && E != "" && F != "") {
@@ -113,6 +157,7 @@ function gamecondition() {
       button.innerText="New game";
       button.style.backgroundColor="white"
       anna.innerText=`winner is ${playbox[3].innerText}`
+      count++
     }
   }
 
@@ -125,19 +170,23 @@ function gamecondition() {
       button.innerText="New game";
       button.style.backgroundColor="white"
       anna.innerText=`winner is ${playbox[7].innerText}`
+      count++
     }
   }
 if(A!=""&&B!=""&&C!=""&&D!=""&&E!=""&&F!=""&&G!=""&&H!=""&&I!=""&&!anna.innerText.includes("winner")){
     anna.innerText=`Game draw`
     button.innerText="New game";
+    count++
 }
 }
 
 button.addEventListener("click", function (e) {
+  
   let playbox = document.querySelectorAll(".playbox");
     anna.innerText=""
       button.style.backgroundColor="aquamarine"
     button.innerText="Reset"
     playbox.forEach((e)=>e.style.backgroundColor="black")
   playbox.forEach((e) => (e.innerHTML = "<h1></h1>"));
+ 
 });
